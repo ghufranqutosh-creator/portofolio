@@ -1,9 +1,8 @@
-name: Deploy Portfolio Website
+name: Deploy Portfolio to GitHub Pages
 
 on:
   push:
-    branches:
-      - main   # Change to "master" if your repo’s default branch is master
+    branches: [ main ]   # pipeline runs every time you push to main branch
 
 permissions:
   contents: read
@@ -15,19 +14,20 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build-deploy:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
       - name: Setup Pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@v4
 
-      - name: Upload Website Files
+      - name: Upload website files
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./portofolio  # ✅ folder where your index.html is located
+          path: "."   # upload everything (index.html, css, js, images)
 
       - name: Deploy to GitHub Pages
         id: deployment
