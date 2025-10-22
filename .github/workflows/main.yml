@@ -1,0 +1,34 @@
+name: Deploy Portfolio Website
+
+on:
+  push:
+    branches:
+      - main   # Change to "master" if your repo’s default branch is master
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Website Files
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./portofolio  # ✅ folder where your index.html is located
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
